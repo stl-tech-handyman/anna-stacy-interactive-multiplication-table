@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Multiplication Table (20x20)</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.ico">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body {
@@ -98,22 +100,24 @@
 
         .multiplication-table {
             border-collapse: collapse;
-            border: 3px solid #333;
+            border: 3px solid white;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            font-size: 1em;
+            font-size: 1.2em;
         }
 
         .table-cell {
             width: 60px;
             height: 60px;
             text-align: center;
-            font-size: 1.1em;
+            font-size: 1.3em;
             font-weight: bold;
-            border: 1px solid #333;
+            border: 1px solid white;
             position: relative;
             transition: all 0.3s ease;
+            color: #000;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8), -1px -1px 2px rgba(255,255,255,0.8), 1px -1px 2px rgba(255,255,255,0.8), -1px 1px 2px rgba(255,255,255,0.8);
         }
 
         /* Theme Styles */
@@ -158,71 +162,127 @@
         }
 
         .header-cell {
-            background: linear-gradient(45deg, #2c3e50, #34495e);
-            color: white;
-            font-size: 1.2em;
-            font-weight: 900;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            border: 2px solid #1a252f;
+            background: linear-gradient(45deg, #1a252f, #2c3e50) !important;
+            color: white !important;
+            font-size: 1.1em;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            border: 2px solid #0f1419 !important;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.1), 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .x-cell {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            font-size: 1.4em;
-            color: white;
-            font-weight: 900;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            border: 2px solid #a93226;
+            background: linear-gradient(45deg, #c0392b, #a93226) !important;
+            font-size: 1.3em;
+            color: white !important;
+            font-weight: 800;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            border: 2px solid #8b2635 !important;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.1), 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .highlighted-row {
-            background: linear-gradient(90deg, rgba(255, 107, 107, 0.4), rgba(255, 107, 107, 0.2)) !important;
-            border-left: 4px solid #ff6b6b !important;
-            border-right: 4px solid #ff6b6b !important;
+            background: linear-gradient(90deg, rgba(52, 152, 219, 0.15), rgba(52, 152, 219, 0.05)) !important;
+            border-left: 3px solid #3498db !important;
+            border-right: 3px solid #3498db !important;
         }
 
         .highlighted-col {
-            background: linear-gradient(0deg, rgba(78, 205, 196, 0.4), rgba(78, 205, 196, 0.2)) !important;
-            border-top: 4px solid #4ecdc4 !important;
-            border-bottom: 4px solid #4ecdc4 !important;
+            background: linear-gradient(0deg, rgba(46, 204, 113, 0.15), rgba(46, 204, 113, 0.05)) !important;
+            border-top: 3px solid #2ecc71 !important;
+            border-bottom: 3px solid #2ecc71 !important;
         }
 
         .answer-cell {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4) !important;
+            background: linear-gradient(45deg, #e74c3c, #c0392b) !important;
             color: white !important;
-            border: 4px solid #333 !important;
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
-            transform: scale(1.15);
+            border: 3px solid #8b2635 !important;
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.4), inset 0 2px 4px rgba(255,255,255,0.2);
+            transform: scale(1.1);
             z-index: 10;
-            font-size: 1.1em;
-            font-weight: 900;
-        }
-
-        .arrow {
-            position: absolute;
             font-size: 1.2em;
-            color: #ff6b6b;
-            font-weight: bold;
+            font-weight: 800;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .highlighted-row-header {
+            background: linear-gradient(45deg, #3498db, #2980b9) !important;
+            color: white !important;
+            font-weight: 800 !important;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3) !important;
+        }
+
+        .highlighted-col-header {
+            background: linear-gradient(45deg, #2ecc71, #27ae60) !important;
+            color: white !important;
+            font-weight: 800 !important;
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.3) !important;
+        }
+
+        .anna-placeholder {
+            background: linear-gradient(45deg, #ff6b9d, #c44569) !important;
+            color: white !important;
+            font-weight: 800 !important;
+            font-size: 1.1em !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
+            border: 2px solid #a93226 !important;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.1), 0 1px 2px rgba(0,0,0,0.2) !important;
+        }
+
+        .stacy-placeholder {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d) !important;
+            color: white !important;
+            font-weight: 800 !important;
+            font-size: 1.1em !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
+            border: 2px solid #2d7d77 !important;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.1), 0 1px 2px rgba(0,0,0,0.2) !important;
+        }
+
+        .anna-placeholder-control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .anna-placeholder-control:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+        }
+
+        .stacy-placeholder-control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stacy-placeholder-control:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+        }
+
+        .placeholder-img {
+            font-size: 2.5em;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            z-index: 5;
         }
 
-        .arrow-right {
-            right: -20px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .arrow-down {
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .arrow-diagonal {
-            bottom: -10px;
-            right: -10px;
-            font-size: 1em;
+        .placeholder-name {
+            color: white;
+            font-weight: 800;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
 
         .history-section {
@@ -429,6 +489,7 @@
                 border-radius: 0 !important;
                 padding: 10px !important;
                 max-width: none !important;
+                page-break-inside: avoid;
             }
 
             .controls, .teacher-controls, .history-section, .instructions, .support-section {
@@ -447,52 +508,96 @@
             .table-container {
                 margin: 0 !important;
                 overflow: visible !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
 
             .multiplication-table {
                 box-shadow: none !important;
-                border: 2px solid #000 !important;
+                border: 2px solid white !important;
                 page-break-inside: avoid;
+                break-inside: avoid;
+                width: 100% !important;
+                max-width: 100% !important;
             }
 
             .table-cell {
-                border: 1px solid #000 !important;
+                border: 1px solid white !important;
                 background: white !important;
                 color: black !important;
                 font-weight: bold !important;
+                width: 8% !important;
+                height: 50px !important;
+                font-size: 1em !important;
+                page-break-inside: avoid;
+                text-shadow: 1px 1px 2px rgba(255,255,255,0.8) !important;
             }
 
             .header-cell {
-                background: #e0e0e0 !important;
-                color: black !important;
+                background: #2c3e50 !important;
+                color: white !important;
                 font-weight: bold !important;
+                font-size: 1.1em !important;
                 border: 2px solid #000 !important;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
             }
 
             .x-cell {
-                background: #d0d0d0 !important;
-                color: black !important;
+                background: #c0392b !important;
+                color: white !important;
                 font-weight: bold !important;
+                font-size: 1.3em !important;
                 border: 2px solid #000 !important;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
             }
 
             .highlighted-row {
-                background: #ffeb3b !important;
-                border-left: 3px solid #ff9800 !important;
-                border-right: 3px solid #ff9800 !important;
+                background: #e3f2fd !important;
+                border-left: 3px solid #3498db !important;
+                border-right: 3px solid #3498db !important;
             }
 
             .highlighted-col {
-                background: #e1f5fe !important;
-                border-top: 3px solid #2196f3 !important;
-                border-bottom: 3px solid #2196f3 !important;
+                background: #e8f5e8 !important;
+                border-top: 3px solid #2ecc71 !important;
+                border-bottom: 3px solid #2ecc71 !important;
             }
 
             .answer-cell {
-                background: #ffcdd2 !important;
-                border: 4px solid #f44336 !important;
+                background: #e74c3c !important;
+                border: 3px solid #8b2635 !important;
                 font-weight: bold !important;
-                color: black !important;
+                color: white !important;
+                font-size: 1.2em !important;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
+            }
+
+            .highlighted-row-header {
+                background: #3498db !important;
+                color: white !important;
+                font-weight: bold !important;
+            }
+
+            .highlighted-col-header {
+                background: #2ecc71 !important;
+                color: white !important;
+                font-weight: bold !important;
+            }
+
+            .anna-placeholder {
+                background: #ff6b9d !important;
+                color: white !important;
+                font-weight: bold !important;
+                font-size: 1em !important;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
+            }
+
+            .stacy-placeholder {
+                background: #4ecdc4 !important;
+                color: white !important;
+                font-weight: bold !important;
+                font-size: 1em !important;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
             }
 
             .arrow {
@@ -503,6 +608,31 @@
                 color: black !important;
                 text-shadow: none !important;
                 margin-bottom: 20px !important;
+                font-size: 2em !important;
+            }
+
+            /* Ensure single page layout */
+            @page {
+                size: A4;
+                margin: 0.5in;
+            }
+
+            .multiplication-table {
+                font-size: 0.9em !important;
+            }
+
+            .table-cell {
+                width: 7% !important;
+                height: 45px !important;
+                font-size: 0.9em !important;
+            }
+
+            .header-cell {
+                font-size: 1em !important;
+            }
+
+            .x-cell {
+                font-size: 1.1em !important;
             }
         }
 
@@ -513,31 +643,68 @@
         }
 
         .print-bw .header-cell {
-            background: #f0f0f0 !important;
-            color: black !important;
+            background: #2c3e50 !important;
+            color: white !important;
+            font-size: 1.1em !important;
+            font-weight: bold !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
         }
 
         .print-bw .x-cell {
-            background: #e0e0e0 !important;
-            color: black !important;
+            background: #c0392b !important;
+            color: white !important;
+            font-size: 1.3em !important;
+            font-weight: bold !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
         }
 
         .print-bw .highlighted-row {
-            background: #f5f5f5 !important;
-            border-left: 3px solid #333 !important;
-            border-right: 3px solid #333 !important;
+            background: #e3f2fd !important;
+            border-left: 3px solid #3498db !important;
+            border-right: 3px solid #3498db !important;
         }
 
         .print-bw .highlighted-col {
-            background: #f8f8f8 !important;
-            border-top: 3px solid #666 !important;
-            border-bottom: 3px solid #666 !important;
+            background: #e8f5e8 !important;
+            border-top: 3px solid #2ecc71 !important;
+            border-bottom: 3px solid #2ecc71 !important;
         }
 
         .print-bw .answer-cell {
-            background: #e8e8e8 !important;
-            border: 4px solid #000 !important;
+            background: #e74c3c !important;
+            border: 3px solid #8b2635 !important;
             font-weight: bold !important;
+            color: white !important;
+            font-size: 1.2em !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
+        }
+
+        .print-bw .highlighted-row-header {
+            background: #3498db !important;
+            color: white !important;
+            font-weight: bold !important;
+        }
+
+        .print-bw .highlighted-col-header {
+            background: #2ecc71 !important;
+            color: white !important;
+            font-weight: bold !important;
+        }
+
+        .print-bw .anna-placeholder {
+            background: #ff6b9d !important;
+            color: white !important;
+            font-weight: bold !important;
+            font-size: 1em !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
+        }
+
+        .print-bw .stacy-placeholder {
+            background: #4ecdc4 !important;
+            color: white !important;
+            font-weight: bold !important;
+            font-size: 1em !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
         }
 
         @media (max-width: 768px) {
@@ -549,7 +716,7 @@
             .table-cell {
                 width: 45px;
                 height: 45px;
-                font-size: 0.9em;
+                font-size: 1.1em;
             }
             
             .header-cell {
@@ -557,7 +724,7 @@
             }
 
             .multiplication-table {
-                font-size: 0.8em;
+                font-size: 1em;
             }
         }
     </style>
@@ -567,6 +734,11 @@
         <h1>🎯 Interactive Multiplication Table (12×12)</h1>
         
         <div class="controls">
+            <div class="anna-placeholder-control">
+                <div class="placeholder-img">👧</div>
+                <div class="placeholder-name">Anna</div>
+            </div>
+            
             <div class="control-group" data-tooltip="Select the first number to multiply">
                 <label for="first-number">First Number:</label>
                 <select id="first-number">
@@ -589,12 +761,17 @@
                     <option value="capucina">🌸 Capucina</option>
                     <option value="princess">👑 Princess</option>
                     <option value="unicorn">🦄 Unicorn</option>
-                    <option value="butterfly">🦋 Butterfly</option>
+                    <option value="butterfly" selected>🦋 Butterfly</option>
                     <option value="ocean">🌊 Ocean</option>
                     <option value="forest">🌲 Forest</option>
                     <option value="space">🚀 Space</option>
                     <option value="candy">🍭 Candy</option>
                 </select>
+            </div>
+            
+            <div class="stacy-placeholder-control">
+                <div class="placeholder-img">👧</div>
+                <div class="placeholder-name">Stacy</div>
             </div>
         </div>
 
@@ -640,7 +817,7 @@
         <div class="support-section">
             <p>Enjoying this learning tool? Support the creator!</p>
             <a href="https://buymeacoffee.com/ashev" target="_blank" class="support-link">
-                ☕ Buy Me a Coffee
+                🥤 Buy Anna & Stacy a Slushee
             </a>
         </div>
     </div>
@@ -692,6 +869,7 @@
                 cell.id = `col-${i}`;
                 headerRow.appendChild(cell);
             }
+
             table.appendChild(headerRow);
 
             // Create data rows
@@ -714,6 +892,7 @@
                     cell.style.background = getCellColor(i, j);
                     row.appendChild(cell);
                 }
+
                 table.appendChild(row);
             }
         }
@@ -778,7 +957,7 @@
                     const value = row * col;
                     const maxValue = TABLE_SIZE * TABLE_SIZE;
                     const ratio = value / maxValue;
-                    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43'];
+                    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43', '#ff6b9d', '#c44569', '#f8b500', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43', '#ff6348', '#ff3838'];
                     return colors[Math.floor(ratio * colors.length)];
                 }
             },
@@ -824,7 +1003,7 @@
             }
         };
 
-        let currentTheme = 'rainbow';
+        let currentTheme = 'butterfly';
 
         // Generate colors for cells based on current theme
         function getCellColor(row, col) {
@@ -855,32 +1034,30 @@
                 cell.classList.remove('answer-cell');
             });
 
-            // Remove arrows
-            const arrows = document.querySelectorAll('.arrow');
-            arrows.forEach(arrow => arrow.remove());
+            // Clear header highlights
+            const rowHeaders = document.querySelectorAll('[id^="row-"]');
+            rowHeaders.forEach(header => {
+                header.classList.remove('highlighted-row-header');
+            });
+
+            const colHeaders = document.querySelectorAll('[id^="col-"]');
+            colHeaders.forEach(header => {
+                header.classList.remove('highlighted-col-header');
+            });
         }
 
-        // Add visual arrows
-        function addArrows(firstNum, secondNum, answer) {
-            // Arrow from row header to answer
+        // Highlight headers
+        function highlightHeaders(firstNum, secondNum) {
+            // Highlight row header
             const rowHeader = document.getElementById(`row-${firstNum}`);
-            const answerCell = document.getElementById(`cell-${firstNum}-${secondNum}`);
-            
-            if (rowHeader && answerCell) {
-                const arrowRight = document.createElement('div');
-                arrowRight.className = 'arrow arrow-right';
-                arrowRight.textContent = '→';
-                rowHeader.appendChild(arrowRight);
+            if (rowHeader) {
+                rowHeader.classList.add('highlighted-row-header');
             }
 
-            // Arrow from column header to answer
+            // Highlight column header
             const colHeader = document.getElementById(`col-${secondNum}`);
-            
-            if (colHeader && answerCell) {
-                const arrowDown = document.createElement('div');
-                arrowDown.className = 'arrow arrow-down';
-                arrowDown.textContent = '↓';
-                colHeader.appendChild(arrowDown);
+            if (colHeader) {
+                colHeader.classList.add('highlighted-col-header');
             }
         }
 
@@ -908,6 +1085,49 @@
             const items = historyList.querySelectorAll('.history-item');
             if (items.length > MAX_HISTORY_ITEMS) {
                 historyList.removeChild(items[items.length - 1]);
+            }
+        }
+
+        // Highlight single number (row or column)
+        function highlightSingleNumber(num, type) {
+            clearHighlights();
+
+            if (!num) return;
+
+            if (type === 'row') {
+                // Highlight the row
+                for (let j = 1; j <= TABLE_SIZE; j++) {
+                    const cell = document.getElementById(`cell-${num}-${j}`);
+                    if (cell) {
+                        cell.classList.add('highlighted-row');
+                    }
+                }
+                // Highlight row header
+                const rowHeader = document.getElementById(`row-${num}`);
+                if (rowHeader) {
+                    rowHeader.classList.add('highlighted-row-header');
+                }
+            } else if (type === 'col') {
+                // Highlight the column
+                for (let i = 1; i <= TABLE_SIZE; i++) {
+                    const cell = document.getElementById(`cell-${i}-${num}`);
+                    if (cell) {
+                        cell.classList.add('highlighted-col');
+                    }
+                }
+                // Highlight column header
+                const colHeader = document.getElementById(`col-${num}`);
+                if (colHeader) {
+                    colHeader.classList.add('highlighted-col-header');
+                }
+            }
+
+            // Update display
+            const display = document.getElementById('multiplication-display');
+            if (type === 'row') {
+                display.textContent = `Row ${num} selected - choose a second number!`;
+            } else if (type === 'col') {
+                display.textContent = `Column ${num} selected - choose a first number!`;
             }
         }
 
@@ -948,8 +1168,8 @@
                 answerCell.classList.add('answer-cell');
             }
 
-            // Add arrows
-            addArrows(firstNum, secondNum, answer);
+            // Highlight headers
+            highlightHeaders(firstNum, secondNum);
 
             // Update URL
             updateURL(firstNum, secondNum);
@@ -1028,13 +1248,29 @@
         document.getElementById('first-number').addEventListener('change', function() {
             const firstNum = parseInt(this.value);
             const secondNum = parseInt(document.getElementById('second-number').value);
-            highlightMultiplication(firstNum, secondNum);
+            
+            if (firstNum && secondNum) {
+                highlightMultiplication(firstNum, secondNum);
+            } else if (firstNum) {
+                highlightSingleNumber(firstNum, 'row');
+            } else {
+                clearHighlights();
+                document.getElementById('multiplication-display').textContent = 'Select two numbers to see the multiplication!';
+            }
         });
 
         document.getElementById('second-number').addEventListener('change', function() {
             const firstNum = parseInt(document.getElementById('first-number').value);
             const secondNum = parseInt(this.value);
-            highlightMultiplication(firstNum, secondNum);
+            
+            if (firstNum && secondNum) {
+                highlightMultiplication(firstNum, secondNum);
+            } else if (secondNum) {
+                highlightSingleNumber(secondNum, 'col');
+            } else {
+                clearHighlights();
+                document.getElementById('multiplication-display').textContent = 'Select two numbers to see the multiplication!';
+            }
         });
 
         document.getElementById('theme-selector').addEventListener('change', function() {
@@ -1150,7 +1386,7 @@
             loadURLParameters();
             
             // Set default theme
-            switchTheme('rainbow');
+            switchTheme('butterfly');
         });
     </script>
 </body>
