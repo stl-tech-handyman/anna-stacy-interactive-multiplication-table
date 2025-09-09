@@ -1257,16 +1257,18 @@
 
         // Clear all highlights
         function clearHighlights() {
-            // Clear row highlights
-            for (let i = 1; i <= TABLE_SIZE; i++) {
+            // Clear row highlights (including 0 if enabled)
+            const startRow = INCLUDE_ZERO ? 0 : 1;
+            for (let i = startRow; i <= TABLE_SIZE; i++) {
                 const rowCells = document.querySelectorAll(`[id^="cell-${i}-"]`);
                 rowCells.forEach(cell => {
                     cell.classList.remove('highlighted-row');
                 });
             }
 
-            // Clear column highlights
-            for (let j = 1; j <= TABLE_SIZE; j++) {
+            // Clear column highlights (including 0 if enabled)
+            const startCol = INCLUDE_ZERO ? 0 : 1;
+            for (let j = startCol; j <= TABLE_SIZE; j++) {
                 const colCells = document.querySelectorAll(`[id*="-${j}"]`);
                 colCells.forEach(cell => {
                     cell.classList.remove('highlighted-col');
@@ -1343,11 +1345,12 @@
         function highlightSingleNumber(num, type) {
             clearHighlights();
 
-            if (!num) return;
+            if (num === null || num === undefined) return;
 
             if (type === 'row') {
-                // Highlight the row
-                for (let j = 1; j <= TABLE_SIZE; j++) {
+                // Highlight the row (including 0 if enabled)
+                const startCol = INCLUDE_ZERO ? 0 : 1;
+                for (let j = startCol; j <= TABLE_SIZE; j++) {
                     const cell = document.getElementById(`cell-${num}-${j}`);
                     if (cell) {
                         cell.classList.add('highlighted-row');
@@ -1359,8 +1362,9 @@
                     rowHeader.classList.add('highlighted-row-header');
                 }
             } else if (type === 'col') {
-                // Highlight the column
-                for (let i = 1; i <= TABLE_SIZE; i++) {
+                // Highlight the column (including 0 if enabled)
+                const startRow = INCLUDE_ZERO ? 0 : 1;
+                for (let i = startRow; i <= TABLE_SIZE; i++) {
                     const cell = document.getElementById(`cell-${i}-${num}`);
                     if (cell) {
                         cell.classList.add('highlighted-col');
@@ -1386,7 +1390,7 @@
         function highlightMultiplication(firstNum, secondNum) {
             clearHighlights();
 
-            if (!firstNum || !secondNum) return;
+            if (firstNum === null || firstNum === undefined || secondNum === null || secondNum === undefined) return;
 
             const answer = firstNum * secondNum;
 
@@ -1397,16 +1401,18 @@
             // Add to history
             addToHistory(firstNum, secondNum, answer);
 
-            // Highlight the row
-            for (let j = 1; j <= TABLE_SIZE; j++) {
+            // Highlight the row (including 0 if enabled)
+            const startCol = INCLUDE_ZERO ? 0 : 1;
+            for (let j = startCol; j <= TABLE_SIZE; j++) {
                 const cell = document.getElementById(`cell-${firstNum}-${j}`);
                 if (cell) {
                     cell.classList.add('highlighted-row');
                 }
             }
 
-            // Highlight the column
-            for (let i = 1; i <= TABLE_SIZE; i++) {
+            // Highlight the column (including 0 if enabled)
+            const startRow = INCLUDE_ZERO ? 0 : 1;
+            for (let i = startRow; i <= TABLE_SIZE; i++) {
                 const cell = document.getElementById(`cell-${i}-${secondNum}`);
                 if (cell) {
                     cell.classList.add('highlighted-col');
@@ -1419,9 +1425,11 @@
                 answerCell.classList.add('answer-cell');
             }
 
-            // Add fade effect to non-selected cells
-            for (let i = 1; i <= TABLE_SIZE; i++) {
-                for (let j = 1; j <= TABLE_SIZE; j++) {
+            // Add fade effect to non-selected cells (including 0 if enabled)
+            const startRowFade = INCLUDE_ZERO ? 0 : 1;
+            const startColFade = INCLUDE_ZERO ? 0 : 1;
+            for (let i = startRowFade; i <= TABLE_SIZE; i++) {
+                for (let j = startColFade; j <= TABLE_SIZE; j++) {
                     if (i !== firstNum && j !== secondNum) {
                         const cell = document.getElementById(`cell-${i}-${j}`);
                         if (cell) {
