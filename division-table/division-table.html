@@ -910,31 +910,24 @@
         const TABLE_SIZE = 12;
         const INCLUDE_ZERO = false; // Division by zero is undefined
         const MAX_HISTORY_ITEMS = 50;
+        const DIVIDEND_START = 12; // Start dividends from 12
+        const DIVISOR_START = 1;   // Start divisors from 1
 
         // Generate dropdown options
         function generateDropdownOptions() {
             const firstSelect = document.getElementById('first-number');
             const secondSelect = document.getElementById('second-number');
             
-            // Add 0 option if enabled
-            if (INCLUDE_ZERO) {
-                const option0_1 = document.createElement('option');
-                option0_1.value = 0;
-                option0_1.textContent = 0;
-                firstSelect.appendChild(option0_1);
-                
-                const option0_2 = document.createElement('option');
-                option0_2.value = 0;
-                option0_2.textContent = 0;
-                secondSelect.appendChild(option0_2);
-            }
-            
-            for (let i = 1; i <= TABLE_SIZE; i++) {
+            // Generate dividend options (larger numbers)
+            for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
                 const option1 = document.createElement('option');
                 option1.value = i;
                 option1.textContent = i;
                 firstSelect.appendChild(option1);
-                
+            }
+            
+            // Generate divisor options (1-12)
+            for (let i = DIVISOR_START; i <= TABLE_SIZE; i++) {
                 const option2 = document.createElement('option');
                 option2.value = i;
                 option2.textContent = i;
@@ -942,7 +935,7 @@
             }
         }
 
-        // Generate the multiplication table
+        // Generate the division table
         function generateTable() {
             const table = document.getElementById('multiplication-table');
             table.innerHTML = '';
@@ -956,61 +949,23 @@
             xCell.textContent = '÷';
             headerRow.appendChild(xCell);
 
-            // Add 0 column header if enabled
-            if (INCLUDE_ZERO) {
-                const zeroHeader = document.createElement('td');
-                zeroHeader.className = 'table-cell header-cell clickable-header';
-                zeroHeader.textContent = 0;
-                zeroHeader.id = `col-0`;
-                zeroHeader.addEventListener('click', () => selectNumber(0, 'col'));
-                headerRow.appendChild(zeroHeader);
-            }
-
-            // Column headers (1-12)
-            for (let i = 1; i <= TABLE_SIZE; i++) {
+            // Column headers (divisors: 1-12)
+            for (let j = DIVISOR_START; j <= TABLE_SIZE; j++) {
                 const cell = document.createElement('td');
                 cell.className = 'table-cell header-cell clickable-header';
-                cell.textContent = i;
-                cell.id = `col-${i}`;
-                cell.addEventListener('click', () => selectNumber(i, 'col'));
+                cell.textContent = j;
+                cell.id = `col-${j}`;
+                cell.addEventListener('click', () => selectNumber(j, 'col'));
                 headerRow.appendChild(cell);
             }
 
             table.appendChild(headerRow);
 
-            // Add 0 row if enabled
-            if (INCLUDE_ZERO) {
-                const zeroRow = document.createElement('tr');
-                
-                // Row header for zero row
-                const zeroRowHeader = document.createElement('td');
-                zeroRowHeader.className = 'table-cell header-cell clickable-header';
-                zeroRowHeader.textContent = 0;
-                zeroRowHeader.id = `row-0`;
-                zeroRowHeader.addEventListener('click', () => selectNumber(0, 'row'));
-                zeroRow.appendChild(zeroRowHeader);
-
-                // Data cells for zero row
-                for (let j = 0; j <= TABLE_SIZE; j++) {
-                    const cell = document.createElement('td');
-                    cell.className = 'table-cell';
-                    if (j === 0) {
-                        cell.textContent = '∞';
-                    } else {
-                        cell.textContent = '0';
-                    }
-                    cell.id = `cell-0-${j}`;
-                    cell.style.background = getCellColor(0, j);
-                    zeroRow.appendChild(cell);
-                }
-                table.appendChild(zeroRow);
-            }
-
-            // Create data rows
-            for (let i = 1; i <= TABLE_SIZE; i++) {
+            // Create data rows (dividends: 12-23)
+            for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
                 const row = document.createElement('tr');
                 
-                // Row header
+                // Row header (dividend)
                 const rowHeader = document.createElement('td');
                 rowHeader.className = 'table-cell header-cell clickable-header';
                 rowHeader.textContent = i;
@@ -1018,16 +973,12 @@
                 rowHeader.addEventListener('click', () => selectNumber(i, 'row'));
                 row.appendChild(rowHeader);
 
-                // Data cells
-                for (let j = 0; j <= TABLE_SIZE; j++) {
+                // Data cells (dividend ÷ divisor)
+                for (let j = DIVISOR_START; j <= TABLE_SIZE; j++) {
                     const cell = document.createElement('td');
                     cell.className = 'table-cell';
-                    if (j === 0) {
-                        cell.textContent = '∞';
-                    } else {
-                        const quotient = Math.floor(i / j);
-                        cell.textContent = quotient.toString();
-                    }
+                    const quotient = Math.floor(i / j);
+                    cell.textContent = quotient.toString();
                     cell.id = `cell-${i}-${j}`;
                     cell.style.background = getCellColor(i, j);
                     row.appendChild(cell);
@@ -1266,18 +1217,16 @@
 
         // Clear all highlights
         function clearHighlights() {
-            // Clear row highlights (including 0 if enabled)
-            const startRow = INCLUDE_ZERO ? 0 : 1;
-            for (let i = startRow; i <= TABLE_SIZE; i++) {
+            // Clear row highlights (dividends: 12-23)
+            for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
                 const rowCells = document.querySelectorAll(`[id^="cell-${i}-"]`);
                 rowCells.forEach(cell => {
                     cell.classList.remove('highlighted-row');
                 });
             }
 
-            // Clear column highlights (including 0 if enabled)
-            const startCol = INCLUDE_ZERO ? 0 : 1;
-            for (let j = startCol; j <= TABLE_SIZE; j++) {
+            // Clear column highlights (divisors: 1-12)
+            for (let j = DIVISOR_START; j <= TABLE_SIZE; j++) {
                 const colCells = document.querySelectorAll(`[id*="-${j}"]`);
                 colCells.forEach(cell => {
                     cell.classList.remove('highlighted-col');
@@ -1364,9 +1313,8 @@
             if (num === null || num === undefined) return;
 
             if (type === 'row') {
-                // Highlight the row (including 0 if enabled)
-                const startCol = INCLUDE_ZERO ? 0 : 1;
-                for (let j = startCol; j <= TABLE_SIZE; j++) {
+                // Highlight the row (dividend)
+                for (let j = DIVISOR_START; j <= TABLE_SIZE; j++) {
                     const cell = document.getElementById(`cell-${num}-${j}`);
                     if (cell) {
                         cell.classList.add('highlighted-row');
@@ -1378,9 +1326,8 @@
                     rowHeader.classList.add('highlighted-row-header');
                 }
             } else if (type === 'col') {
-                // Highlight the column (including 0 if enabled)
-                const startRow = INCLUDE_ZERO ? 0 : 1;
-                for (let i = startRow; i <= TABLE_SIZE; i++) {
+                // Highlight the column (divisor)
+                for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
                     const cell = document.getElementById(`cell-${i}-${num}`);
                     if (cell) {
                         cell.classList.add('highlighted-col');
@@ -1423,18 +1370,16 @@
             // Add to history
             addToHistory(firstNum, secondNum, answer);
 
-            // Highlight the row (including 0 if enabled)
-            const startCol = INCLUDE_ZERO ? 0 : 1;
-            for (let j = startCol; j <= TABLE_SIZE; j++) {
+            // Highlight the row (dividend)
+            for (let j = DIVISOR_START; j <= TABLE_SIZE; j++) {
                 const cell = document.getElementById(`cell-${firstNum}-${j}`);
                 if (cell) {
                     cell.classList.add('highlighted-row');
                 }
             }
 
-            // Highlight the column (including 0 if enabled)
-            const startRow = INCLUDE_ZERO ? 0 : 1;
-            for (let i = startRow; i <= TABLE_SIZE; i++) {
+            // Highlight the column (divisor)
+            for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
                 const cell = document.getElementById(`cell-${i}-${secondNum}`);
                 if (cell) {
                     cell.classList.add('highlighted-col');
@@ -1447,11 +1392,9 @@
                 answerCell.classList.add('answer-cell');
             }
 
-            // Add fade effect to non-selected cells (including 0 if enabled)
-            const startRowFade = INCLUDE_ZERO ? 0 : 1;
-            const startColFade = INCLUDE_ZERO ? 0 : 1;
-            for (let i = startRowFade; i <= TABLE_SIZE; i++) {
-                for (let j = startColFade; j <= TABLE_SIZE; j++) {
+            // Add fade effect to non-selected cells
+            for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
+                for (let j = DIVISOR_START; j <= TABLE_SIZE; j++) {
                     if (i !== firstNum && j !== secondNum) {
                         const cell = document.getElementById(`cell-${i}-${j}`);
                         if (cell) {
