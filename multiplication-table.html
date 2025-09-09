@@ -1445,65 +1445,66 @@
         // Teacher functionality
         function initTeacherControls() {
             // Print functionality
-            document.getElementById('print-btn').addEventListener('click', function() {
-                window.print();
-            });
+            const printBtn = document.getElementById('print-btn');
+            if (printBtn) {
+                printBtn.addEventListener('click', function() {
+                    console.log('Print button clicked');
+                    window.print();
+                });
+            } else {
+                console.error('Print button not found');
+            }
 
             // PNG Export functionality
-            document.getElementById('export-png-btn').addEventListener('click', function() {
-                const table = document.getElementById('multiplication-table');
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                // Set canvas size
-                const rect = table.getBoundingClientRect();
-                canvas.width = rect.width * 2; // Higher resolution
-                canvas.height = rect.height * 2;
-                
-                // Scale context for higher resolution
-                ctx.scale(2, 2);
-                
-                // Use html2canvas-like approach
-                html2canvas(table, {
-                    canvas: canvas,
-                    scale: 2,
-                    useCORS: true,
-                    backgroundColor: '#ffffff'
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = `multiplication-table-${currentTheme}-${new Date().toISOString().split('T')[0]}.png`;
-                    link.href = canvas.toDataURL();
-                    link.click();
-                }).catch(err => {
-                    // Fallback: simple canvas approach
-                    const img = new Image();
-                    img.onload = function() {
-                        ctx.drawImage(img, 0, 0);
+            const exportBtn = document.getElementById('export-png-btn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', function() {
+                    console.log('Export PNG button clicked');
+                    const table = document.getElementById('multiplication-table');
+                    
+                    if (typeof html2canvas === 'undefined') {
+                        alert('html2canvas library not loaded. Please refresh the page and try again.');
+                        return;
+                    }
+                    
+                    html2canvas(table, {
+                        backgroundColor: '#ffffff',
+                        scale: 2,
+                        useCORS: true,
+                        allowTaint: true,
+                        logging: false
+                    }).then(canvas => {
                         const link = document.createElement('a');
                         link.download = `multiplication-table-${currentTheme}-${new Date().toISOString().split('T')[0]}.png`;
-                        link.href = canvas.toDataURL();
+                        link.href = canvas.toDataURL('image/png');
+                        document.body.appendChild(link);
                         link.click();
-                    };
-                    img.src = 'data:image/svg+xml;base64,' + btoa(`
-                        <svg xmlns="http://www.w3.org/2000/svg" width="${rect.width}" height="${rect.height}">
-                            <foreignObject width="100%" height="100%">
-                                <div xmlns="http://www.w3.org/1999/xhtml">${table.outerHTML}</div>
-                            </foreignObject>
-                        </svg>
-                    `);
+                        document.body.removeChild(link);
+                    }).catch(err => {
+                        console.error('Error generating PNG:', err);
+                        alert('Error generating PNG. Please try again.');
+                    });
                 });
-            });
+            } else {
+                console.error('Export PNG button not found');
+            }
 
             // Black and White Print functionality
-            document.getElementById('print-bw-btn').addEventListener('click', function() {
-                document.body.classList.add('print-bw');
-                setTimeout(() => {
-                    window.print();
+            const printBwBtn = document.getElementById('print-bw-btn');
+            if (printBwBtn) {
+                printBwBtn.addEventListener('click', function() {
+                    console.log('Print B&W button clicked');
+                    document.body.classList.add('print-bw');
                     setTimeout(() => {
-                        document.body.classList.remove('print-bw');
-                    }, 1000);
-                }, 100);
-            });
+                        window.print();
+                        setTimeout(() => {
+                            document.body.classList.remove('print-bw');
+                        }, 1000);
+                    }, 100);
+                });
+            } else {
+                console.error('Print B&W button not found');
+            }
 
         }
 
