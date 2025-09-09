@@ -45,22 +45,32 @@
         .header-section {
             position: relative;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            align-items: flex-start;
+            justify-content: space-between;
             margin-bottom: 5px;
             padding: 4px 0;
             border-bottom: 1px solid #e0e0e0;
-            gap: 10px;
+            min-height: 100px;
         }
 
         .anna-header, .stacy-header {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
-            padding: 6px 10px;
-            border-radius: 10px;
+            gap: 6px;
+            padding: 10px 15px;
+            border-radius: 15px;
             transition: all 0.3s ease;
+            position: absolute;
+            top: 0;
+        }
+
+        .anna-header {
+            left: 0;
+        }
+
+        .stacy-header {
+            right: 0;
         }
 
         .anna-header {
@@ -79,18 +89,18 @@
         }
 
         .header-photo {
-            width: 75px;
-            height: 75px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 4px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
 
         .header-name {
             color: white;
             font-weight: 800;
-            font-size: 1.3em;
+            font-size: 1.5em;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
 
@@ -710,23 +720,27 @@
             }
 
             .header-section {
-                flex-direction: column;
-                gap: 10px;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
                 text-align: center;
+                min-height: 80px;
             }
 
             .anna-header, .stacy-header {
-                flex-direction: row;
-                gap: 8px;
+                position: relative;
+                flex-direction: column;
+                gap: 4px;
+                padding: 6px 10px;
             }
 
             .header-photo {
-                width: 65px;
-                height: 65px;
+                width: 80px;
+                height: 80px;
             }
 
             .header-name {
-                font-size: 1.1em;
+                font-size: 1.2em;
             }
 
             h1 {
