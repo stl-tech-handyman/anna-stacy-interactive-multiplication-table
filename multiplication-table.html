@@ -340,7 +340,7 @@
 
         .history-section {
             position: absolute;
-            top: 20px;
+            top: 100px;
             right: 20px;
             width: 300px;
             background: linear-gradient(45deg, #f8f9fa, #e9ecef);
@@ -367,19 +367,9 @@
             font-size: 1.3em;
         }
 
-        .history-toggle {
-            font-size: 1.5em;
-            transition: transform 0.3s ease;
-        }
-
         .history-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .history-content.expanded {
             max-height: 500px;
+            overflow: hidden;
         }
 
         .history-list {
@@ -737,7 +727,7 @@
 
             .history-section {
                 position: absolute;
-                top: 10px;
+                top: 100px;
                 right: 10px;
                 left: 10px;
                 width: auto;
@@ -872,7 +862,6 @@
             <div class="history-section">
                 <div class="history-header" id="history-header">
                     <h3>📚 Calculation History</h3>
-                    <span class="history-toggle" id="history-toggle">▼</span>
                 </div>
                 <div class="history-content" id="history-content">
                     <ul class="history-list" id="history-list">
@@ -1321,15 +1310,7 @@
 
         // History section functionality
         function initHistory() {
-            const historyHeader = document.getElementById('history-header');
-            const historyContent = document.getElementById('history-content');
-            const historyToggle = document.getElementById('history-toggle');
             const clearHistoryBtn = document.getElementById('clear-history');
-            
-            historyHeader.addEventListener('click', () => {
-                historyContent.classList.toggle('expanded');
-                historyToggle.textContent = historyContent.classList.contains('expanded') ? '▲' : '▼';
-            });
             
             clearHistoryBtn.addEventListener('click', () => {
                 document.getElementById('history-list').innerHTML = '';
