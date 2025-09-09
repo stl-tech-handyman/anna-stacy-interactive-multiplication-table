@@ -332,11 +332,23 @@
 
 
         .history-section {
-            margin-top: 10px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
             background: linear-gradient(45deg, #f8f9fa, #e9ecef);
             border-radius: 8px;
             padding: 10px;
             border: 2px solid #dee2e6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .history-section.show {
+            display: block;
         }
 
         .history-header {
@@ -469,6 +481,11 @@
 
         .print-bw-btn {
             background: linear-gradient(45deg, #757575, #616161);
+            color: white;
+        }
+
+        .history-btn {
+            background: linear-gradient(45deg, #9c27b0, #7b1fa2);
             color: white;
         }
 
@@ -738,6 +755,15 @@
                 order: -1;
             }
 
+            .history-section {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+                max-height: 300px;
+            }
+
             .two-column-layout {
                 flex-direction: column;
                 gap: 10px;
@@ -810,6 +836,13 @@
                 <span class="header-name">Stacy</span>
             </div>
         </div>
+
+        <div class="teacher-controls">
+            <button id="print-btn" class="teacher-btn print-btn">🖨️ Print Table</button>
+            <button id="export-png-btn" class="teacher-btn export-btn">📸 Export as PNG</button>
+            <button id="print-bw-btn" class="teacher-btn print-bw-btn">⚫ Print B&W</button>
+            <button id="toggle-history-btn" class="teacher-btn history-btn">📊 History</button>
+        </div>
         
         <div class="two-column-layout">
             <div class="left-column">
@@ -857,12 +890,6 @@
                         <option value="300">5 minutes</option>
                     </select>
                 </div>
-            </div>
-
-            <div class="teacher-controls">
-                <button id="print-btn" class="teacher-btn print-btn">🖨️ Print Table</button>
-                <button id="export-png-btn" class="teacher-btn export-btn">📸 Export as PNG</button>
-                <button id="print-bw-btn" class="teacher-btn print-bw-btn">⚫ Print B&W</button>
             </div>
 
             <div class="multiplication-display" id="multiplication-display">
@@ -1462,6 +1489,11 @@
                         document.body.classList.remove('print-bw');
                     }, 1000);
                 }, 100);
+            });
+
+            document.getElementById('toggle-history-btn').addEventListener('click', function() {
+                const historySection = document.getElementById('history-section');
+                historySection.classList.toggle('show');
             });
         }
 
