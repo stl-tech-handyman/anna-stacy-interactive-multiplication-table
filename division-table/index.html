@@ -908,9 +908,9 @@
     <script>
         // Configuration
         const TABLE_SIZE = 12;
-        const INCLUDE_ZERO = false; // Division by zero is undefined
+        const INCLUDE_ZERO = true; // Include 0 for division table
         const MAX_HISTORY_ITEMS = 50;
-        const DIVIDEND_START = 12; // Start dividends from 12
+        const DIVIDEND_VALUES = [0, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144]; // Multiples of 12
         const DIVISOR_START = 1;   // Start divisors from 1
 
         // Generate dropdown options
@@ -918,13 +918,13 @@
             const firstSelect = document.getElementById('first-number');
             const secondSelect = document.getElementById('second-number');
             
-            // Generate dividend options (larger numbers)
-            for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
+            // Generate dividend options (multiples of 12)
+            DIVIDEND_VALUES.forEach(value => {
                 const option1 = document.createElement('option');
-                option1.value = i;
-                option1.textContent = i;
+                option1.value = value;
+                option1.textContent = value;
                 firstSelect.appendChild(option1);
-            }
+            });
             
             // Generate divisor options (1-12)
             for (let i = DIVISOR_START; i <= TABLE_SIZE; i++) {
@@ -961,31 +961,35 @@
 
             table.appendChild(headerRow);
 
-            // Create data rows (dividends: 12-23)
-            for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
+            // Create data rows (dividends: multiples of 12)
+            DIVIDEND_VALUES.forEach((dividend, index) => {
                 const row = document.createElement('tr');
                 
                 // Row header (dividend)
                 const rowHeader = document.createElement('td');
                 rowHeader.className = 'table-cell header-cell clickable-header';
-                rowHeader.textContent = i;
-                rowHeader.id = `row-${i}`;
-                rowHeader.addEventListener('click', () => selectNumber(i, 'row'));
+                rowHeader.textContent = dividend;
+                rowHeader.id = `row-${dividend}`;
+                rowHeader.addEventListener('click', () => selectNumber(dividend, 'row'));
                 row.appendChild(rowHeader);
 
                 // Data cells (dividend ÷ divisor)
                 for (let j = DIVISOR_START; j <= TABLE_SIZE; j++) {
                     const cell = document.createElement('td');
                     cell.className = 'table-cell';
-                    const quotient = Math.floor(i / j);
-                    cell.textContent = quotient.toString();
-                    cell.id = `cell-${i}-${j}`;
-                    cell.style.background = getCellColor(i, j);
+                    if (j === 0) {
+                        cell.textContent = '∞';
+                    } else {
+                        const quotient = Math.floor(dividend / j);
+                        cell.textContent = quotient.toString();
+                    }
+                    cell.id = `cell-${dividend}-${j}`;
+                    cell.style.background = getCellColor(dividend, j);
                     row.appendChild(cell);
                 }
 
                 table.appendChild(row);
-            }
+            });
         }
 
         // Theme definitions
@@ -1217,13 +1221,13 @@
 
         // Clear all highlights
         function clearHighlights() {
-            // Clear row highlights (dividends: 12-23)
-            for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
-                const rowCells = document.querySelectorAll(`[id^="cell-${i}-"]`);
+            // Clear row highlights (dividends: multiples of 12)
+            DIVIDEND_VALUES.forEach(dividend => {
+                const rowCells = document.querySelectorAll(`[id^="cell-${dividend}-"]`);
                 rowCells.forEach(cell => {
                     cell.classList.remove('highlighted-row');
                 });
-            }
+            });
 
             // Clear column highlights (divisors: 1-12)
             for (let j = DIVISOR_START; j <= TABLE_SIZE; j++) {
@@ -1327,12 +1331,12 @@
                 }
             } else if (type === 'col') {
                 // Highlight the column (divisor)
-                for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
-                    const cell = document.getElementById(`cell-${i}-${num}`);
+                DIVIDEND_VALUES.forEach(dividend => {
+                    const cell = document.getElementById(`cell-${dividend}-${num}`);
                     if (cell) {
                         cell.classList.add('highlighted-col');
                     }
-                }
+                });
                 // Highlight column header
                 const colHeader = document.getElementById(`col-${num}`);
                 if (colHeader) {
@@ -1379,12 +1383,12 @@
             }
 
             // Highlight the column (divisor)
-            for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
-                const cell = document.getElementById(`cell-${i}-${secondNum}`);
+            DIVIDEND_VALUES.forEach(dividend => {
+                const cell = document.getElementById(`cell-${dividend}-${secondNum}`);
                 if (cell) {
                     cell.classList.add('highlighted-col');
                 }
-            }
+            });
 
             // Highlight the answer cell
             const answerCell = document.getElementById(`cell-${firstNum}-${secondNum}`);
@@ -1393,16 +1397,16 @@
             }
 
             // Add fade effect to non-selected cells
-            for (let i = DIVIDEND_START; i < DIVIDEND_START + TABLE_SIZE; i++) {
+            DIVIDEND_VALUES.forEach(dividend => {
                 for (let j = DIVISOR_START; j <= TABLE_SIZE; j++) {
-                    if (i !== firstNum && j !== secondNum) {
-                        const cell = document.getElementById(`cell-${i}-${j}`);
+                    if (dividend !== firstNum && j !== secondNum) {
+                        const cell = document.getElementById(`cell-${dividend}-${j}`);
                         if (cell) {
                             cell.classList.add('faded');
                         }
                     }
                 }
-            }
+            });
 
             // Highlight headers
             highlightHeaders(firstNum, secondNum);
