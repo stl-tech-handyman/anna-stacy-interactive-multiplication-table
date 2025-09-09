@@ -6,7 +6,6 @@
     <title>Interactive Multiplication Table (20x20)</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="alternate icon" href="favicon.ico">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -449,37 +448,6 @@
 
 
 
-        .teacher-btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.85em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-            min-width: 100px;
-        }
-
-        .teacher-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.25);
-        }
-
-        .print-btn {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-        }
-
-        .export-btn {
-            background: linear-gradient(45deg, #2196F3, #1976D2);
-            color: white;
-        }
-
-        .print-bw-btn {
-            background: linear-gradient(45deg, #757575, #616161);
-            color: white;
-        }
 
         /* Print Styles */
         @media print {
@@ -872,9 +840,6 @@
                     </select>
                 </div>
 
-                <button id="print-btn" class="teacher-btn print-btn">🖨️ Print</button>
-                <button id="export-png-btn" class="teacher-btn export-btn">📸 PNG</button>
-                <button id="print-bw-btn" class="teacher-btn print-bw-btn">⚫ B&W</button>
             </div>
 
             <div class="table-container">
@@ -1399,68 +1364,7 @@
 
         // Teacher functionality
         function initTeacherControls() {
-            // Print functionality
-            const printBtn = document.getElementById('print-btn');
-            if (printBtn) {
-                printBtn.addEventListener('click', function() {
-                    console.log('Print button clicked');
-                    window.print();
-                });
-            } else {
-                console.error('Print button not found');
-            }
-
-            // PNG Export functionality
-            const exportBtn = document.getElementById('export-png-btn');
-            if (exportBtn) {
-                exportBtn.addEventListener('click', function() {
-                    console.log('Export PNG button clicked');
-                    const table = document.getElementById('multiplication-table');
-                    
-                    if (typeof html2canvas === 'undefined') {
-                        alert('html2canvas library not loaded. Please refresh the page and try again.');
-                        return;
-                    }
-                    
-                    html2canvas(table, {
-                        backgroundColor: '#ffffff',
-                        scale: 2,
-                        useCORS: true,
-                        allowTaint: true,
-                        logging: false
-                    }).then(canvas => {
-                        const link = document.createElement('a');
-                        link.download = `multiplication-table-${currentTheme}-${new Date().toISOString().split('T')[0]}.png`;
-                        link.href = canvas.toDataURL('image/png');
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    }).catch(err => {
-                        console.error('Error generating PNG:', err);
-                        alert('Error generating PNG. Please try again.');
-                    });
-                });
-            } else {
-                console.error('Export PNG button not found');
-            }
-
-            // Black and White Print functionality
-            const printBwBtn = document.getElementById('print-bw-btn');
-            if (printBwBtn) {
-                printBwBtn.addEventListener('click', function() {
-                    console.log('Print B&W button clicked');
-                    document.body.classList.add('print-bw');
-                    setTimeout(() => {
-                        window.print();
-                        setTimeout(() => {
-                            document.body.classList.remove('print-bw');
-                        }, 1000);
-                    }, 100);
-                });
-            } else {
-                console.error('Print B&W button not found');
-            }
-
+            // No teacher controls needed
         }
 
         // Enhanced URL parameter loading
