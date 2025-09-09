@@ -319,6 +319,17 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
+        .disabled-header {
+            opacity: 0.3 !important;
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+        }
+
+        .disabled-header:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
         .x-cell {
             background: linear-gradient(45deg, #c0392b, #a93226) !important;
             font-size: 1.1em;
@@ -1566,6 +1577,13 @@
 
         // Select number from header click
         function selectNumber(num, type) {
+            // Check if the header is disabled
+            const headerId = type === 'row' ? `row-${num}` : `col-${num}`;
+            const header = document.getElementById(headerId);
+            if (header && header.classList.contains('disabled-header')) {
+                return; // Don't process clicks on disabled headers
+            }
+
             if (type === 'row') {
                 document.getElementById('first-number').value = num;
                 const secondNum = parseInt(document.getElementById('second-number').value);
@@ -1574,6 +1592,8 @@
                 } else {
                     highlightSingleNumber(num, 'row');
                 }
+                // Filter headers based on selected dividend
+                filterClickableHeaders(num);
             } else if (type === 'col') {
                 document.getElementById('second-number').value = num;
                 const firstNum = parseInt(document.getElementById('first-number').value);
@@ -1641,6 +1661,8 @@
                         option.disabled = false;
                         option.style.color = '#000';
                     });
+                    // Reset clickable headers
+                    resetClickableHeaders();
                 }
             });
         }
@@ -1667,6 +1689,42 @@
                     option.style.color = '#ccc';
                 }
             });
+            
+            // Also filter clickable headers
+            filterClickableHeaders(dividend);
+        }
+
+        // Filter clickable headers based on selected dividend
+        function filterClickableHeaders(dividend) {
+            // Filter column headers (divisors)
+            for (let j = DIVISOR_START; j <= TABLE_SIZE; j++) {
+                const colHeader = document.getElementById(`col-${j}`);
+                if (colHeader) {
+                    const quotient = dividend / j;
+                    if (Number.isInteger(quotient)) {
+                        colHeader.classList.remove('disabled-header');
+                        colHeader.style.opacity = '1';
+                        colHeader.style.cursor = 'pointer';
+                    } else {
+                        colHeader.classList.add('disabled-header');
+                        colHeader.style.opacity = '0.3';
+                        colHeader.style.cursor = 'not-allowed';
+                    }
+                }
+            }
+        }
+
+        // Reset all clickable headers to enabled state
+        function resetClickableHeaders() {
+            // Reset column headers
+            for (let j = DIVISOR_START; j <= TABLE_SIZE; j++) {
+                const colHeader = document.getElementById(`col-${j}`);
+                if (colHeader) {
+                    colHeader.classList.remove('disabled-header');
+                    colHeader.style.opacity = '1';
+                    colHeader.style.cursor = 'pointer';
+                }
+            }
         }
 
         // Initialize everything when page loads
