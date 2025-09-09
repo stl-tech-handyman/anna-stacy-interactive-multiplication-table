@@ -17,7 +17,7 @@ A beautiful, interactive multiplication table designed to help kids learn multip
 - **🍭 Candy** - Bright sweet colors
 
 ### 🎯 Interactive Learning
-- **20×20 Multiplication Table** - Extended from traditional 12×12
+- **12×12 Multiplication Table** - Traditional size with enhanced interactivity
 - **Visual Path Highlighting** - Clear row and column highlighting
 - **Answer Emphasis** - Bold borders and scaling for the answer cell
 - **Visual Arrows** - Guides from operands to answer

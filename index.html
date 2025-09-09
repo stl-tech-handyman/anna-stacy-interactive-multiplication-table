@@ -102,14 +102,14 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            font-size: 0.8em;
+            font-size: 1em;
         }
 
         .table-cell {
-            width: 45px;
-            height: 45px;
+            width: 60px;
+            height: 60px;
             text-align: center;
-            font-size: 0.9em;
+            font-size: 1.1em;
             font-weight: bold;
             border: 1px solid #333;
             position: relative;
@@ -547,24 +547,24 @@
             }
             
             .table-cell {
-                width: 35px;
-                height: 35px;
-                font-size: 0.7em;
+                width: 45px;
+                height: 45px;
+                font-size: 0.9em;
             }
             
             .header-cell {
-                font-size: 0.8em;
+                font-size: 1em;
             }
 
             .multiplication-table {
-                font-size: 0.6em;
+                font-size: 0.8em;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎯 Interactive Multiplication Table (20×20)</h1>
+        <h1>🎯 Interactive Multiplication Table (12×12)</h1>
         
         <div class="controls">
             <div class="control-group" data-tooltip="Select the first number to multiply">
@@ -629,8 +629,8 @@
 
         <div class="instructions">
             <h3>🎓 How to Use This Learning Tool</h3>
-            <p><strong>Step 1:</strong> Choose your first number from the left dropdown (1-20)</p>
-            <p><strong>Step 2:</strong> Choose your second number from the right dropdown (1-20)</p>
+            <p><strong>Step 1:</strong> Choose your first number from the left dropdown (1-12)</p>
+            <p><strong>Step 2:</strong> Choose your second number from the right dropdown (1-12)</p>
             <p><strong>Step 3:</strong> Watch the magic! The table will show you the path from both numbers to the answer</p>
             <p><strong>Step 4:</strong> The answer will be highlighted with a special border and arrows will guide you!</p>
             <p><strong>Step 5:</strong> Your calculations are automatically saved in the history section below</p>
@@ -649,7 +649,7 @@
 
     <script>
         // Configuration
-        const TABLE_SIZE = 20;
+        const TABLE_SIZE = 12;
         const MAX_HISTORY_ITEMS = 50;
 
         // Generate dropdown options
