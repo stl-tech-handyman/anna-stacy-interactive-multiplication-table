@@ -443,9 +443,33 @@
         .teacher-controls {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            align-items: center;
+            gap: 12px;
             margin: 10px 0;
             flex-wrap: wrap;
+        }
+
+        .teacher-controls .control-group {
+            margin: 0;
+            gap: 4px;
+        }
+
+        .teacher-controls .control-group label {
+            font-size: 1em;
+            font-weight: 600;
+            color: #555;
+            margin: 0;
+        }
+
+        .teacher-controls .control-group select {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9em;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
         }
 
         .teacher-btn {
@@ -838,6 +862,21 @@
         </div>
 
         <div class="teacher-controls">
+            <div class="control-group" data-tooltip="Choose your favorite theme!">
+                <label for="theme-selector">Choose Theme:</label>
+                <select id="theme-selector">
+                    <option value="rainbow">🌈 Rainbow</option>
+                    <option value="balerina">🩰 Balerina</option>
+                    <option value="capucina">🌸 Capucina</option>
+                    <option value="princess">👑 Princess</option>
+                    <option value="unicorn">🦄 Unicorn</option>
+                    <option value="butterfly" selected>🦋 Butterfly</option>
+                    <option value="ocean">🌊 Ocean</option>
+                    <option value="forest">🌲 Forest</option>
+                    <option value="space">🚀 Space</option>
+                    <option value="candy">🍭 Candy</option>
+                </select>
+            </div>
             <button id="print-btn" class="teacher-btn print-btn">🖨️ Print Table</button>
             <button id="export-png-btn" class="teacher-btn export-btn">📸 Export as PNG</button>
             <button id="print-bw-btn" class="teacher-btn print-bw-btn">⚫ Print B&W</button>
@@ -861,21 +900,6 @@
                         </select>
                     </div>
 
-                <div class="control-group" data-tooltip="Choose your favorite theme!">
-                    <label for="theme-selector">Choose Theme:</label>
-                    <select id="theme-selector">
-                        <option value="rainbow">🌈 Rainbow</option>
-                        <option value="balerina">🩰 Balerina</option>
-                        <option value="capucina">🌸 Capucina</option>
-                        <option value="princess">👑 Princess</option>
-                        <option value="unicorn">🦄 Unicorn</option>
-                        <option value="butterfly" selected>🦋 Butterfly</option>
-                        <option value="ocean">🌊 Ocean</option>
-                        <option value="forest">🌲 Forest</option>
-                        <option value="space">🚀 Space</option>
-                        <option value="candy">🍭 Candy</option>
-                    </select>
-                </div>
                 <div class="control-group" data-tooltip="Auto-reset selection after specified time">
                     <label for="auto-reset">Auto Reset:</label>
                     <select id="auto-reset">
