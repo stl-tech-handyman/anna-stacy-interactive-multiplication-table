@@ -23,22 +23,23 @@
             min-height: calc(100vh - 20px);
         }
 
-        .two-column-layout {
+        .main-layout {
             display: flex;
+            flex-direction: column;
             gap: 15px;
             margin-top: 10px;
         }
 
-        .left-column {
-            flex: 0 0 300px;
+        .controls-row {
             display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .right-column {
-            flex: 1;
-            display: block;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #dee2e6;
         }
 
         .header-section {
@@ -115,6 +116,12 @@
             align-items: stretch;
             gap: 4px;
             position: relative;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-width: 120px;
         }
 
         .control-group label {
@@ -434,58 +441,6 @@
         }
 
 
-        /* Teacher Controls */
-        .teacher-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid #dee2e6;
-        }
-
-        .teacher-controls .control-group {
-            margin: 0;
-            gap: 6px;
-            background: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .teacher-controls .control-group label {
-            font-size: 0.9em;
-            font-weight: 600;
-            color: #666;
-            margin: 0;
-            text-align: center;
-        }
-
-        .teacher-controls .control-group select {
-            padding: 6px 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 0.85em;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 100px;
-        }
-
-        .teacher-controls .control-group select:hover {
-            border-color: #999;
-        }
-
-        .teacher-controls .control-group select:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
-        }
 
         .teacher-btn {
             padding: 10px 16px;
@@ -789,24 +744,14 @@
                 max-height: 300px;
             }
 
-            .two-column-layout {
+            .controls-row {
                 flex-direction: column;
                 gap: 10px;
+                align-items: stretch;
             }
 
-            .left-column {
-                flex: none;
-                order: 2;
-            }
-
-            .right-column {
-                flex: none;
-                order: 1;
-            }
-
-            .controls {
-                flex-direction: column;
-                gap: 15px;
+            .control-group {
+                min-width: auto;
             }
             
             .table-cell {
@@ -862,43 +807,21 @@
             </div>
         </div>
 
-        <div class="teacher-controls">
-            <div class="control-group" data-tooltip="Choose your favorite theme!">
-                <label for="theme-selector">Choose Theme:</label>
-                <select id="theme-selector">
-                    <option value="rainbow">🌈 Rainbow</option>
-                    <option value="balerina">🩰 Balerina</option>
-                    <option value="capucina">🌸 Capucina</option>
-                    <option value="princess">👑 Princess</option>
-                    <option value="unicorn">🦄 Unicorn</option>
-                    <option value="butterfly" selected>🦋 Butterfly</option>
-                    <option value="ocean">🌊 Ocean</option>
-                    <option value="forest">🌲 Forest</option>
-                    <option value="space">🚀 Space</option>
-                    <option value="candy">🍭 Candy</option>
-                </select>
-            </div>
-            <button id="print-btn" class="teacher-btn print-btn">🖨️ Print Table</button>
-            <button id="export-png-btn" class="teacher-btn export-btn">📸 Export as PNG</button>
-            <button id="print-bw-btn" class="teacher-btn print-bw-btn">⚫ Print B&W</button>
-        </div>
-        
-        <div class="two-column-layout">
-            <div class="left-column">
-                <div class="controls">
-                    <div class="control-group" data-tooltip="Select the first number to multiply">
-                        <label for="first-number">First Number:</label>
-                        <select id="first-number">
-                            <option value="">Choose...</option>
-                        </select>
-                    </div>
-                    
-                    <div class="control-group" data-tooltip="Select the second number to multiply">
-                        <label for="second-number">Second Number:</label>
-                        <select id="second-number">
-                            <option value="">Choose...</option>
-                        </select>
-                    </div>
+        <div class="main-layout">
+            <div class="controls-row">
+                <div class="control-group" data-tooltip="Select the first number to multiply">
+                    <label for="first-number">First Number:</label>
+                    <select id="first-number">
+                        <option value="">Choose...</option>
+                    </select>
+                </div>
+                
+                <div class="control-group" data-tooltip="Select the second number to multiply">
+                    <label for="second-number">Second Number:</label>
+                    <select id="second-number">
+                        <option value="">Choose...</option>
+                    </select>
+                </div>
 
                 <div class="control-group" data-tooltip="Auto-reset selection after specified time">
                     <label for="auto-reset">Auto Reset:</label>
@@ -914,6 +837,32 @@
                         <option value="300">5 minutes</option>
                     </select>
                 </div>
+
+                <div class="control-group" data-tooltip="Choose your favorite theme!">
+                    <label for="theme-selector">Theme:</label>
+                    <select id="theme-selector">
+                        <option value="rainbow">🌈 Rainbow</option>
+                        <option value="balerina">🩰 Balerina</option>
+                        <option value="capucina">🌸 Capucina</option>
+                        <option value="princess">👑 Princess</option>
+                        <option value="unicorn">🦄 Unicorn</option>
+                        <option value="butterfly" selected>🦋 Butterfly</option>
+                        <option value="ocean">🌊 Ocean</option>
+                        <option value="forest">🌲 Forest</option>
+                        <option value="space">🚀 Space</option>
+                        <option value="candy">🍭 Candy</option>
+                    </select>
+                </div>
+
+                <button id="print-btn" class="teacher-btn print-btn">🖨️ Print</button>
+                <button id="export-png-btn" class="teacher-btn export-btn">📸 PNG</button>
+                <button id="print-bw-btn" class="teacher-btn print-bw-btn">⚫ B&W</button>
+            </div>
+
+            <div class="table-container">
+                <table class="multiplication-table" id="multiplication-table">
+                    <!-- Table will be generated by JavaScript -->
+                </table>
             </div>
 
             <div class="multiplication-display" id="multiplication-display">
@@ -932,15 +881,6 @@
                     <button class="clear-history" id="clear-history">Clear History</button>
                 </div>
             </div>
-        </div>
-
-        <div class="right-column">
-            <div class="table-container">
-                <table class="multiplication-table" id="multiplication-table">
-                    <!-- Table will be generated by JavaScript -->
-                </table>
-            </div>
-        </div>
         </div>
     </div>
 
