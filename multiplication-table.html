@@ -43,6 +43,7 @@
         }
 
         .header-section {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -170,16 +171,21 @@
         }
 
         .multiplication-display {
-            text-align: center;
-            font-size: 2em;
-            font-weight: bold;
-            color: #333;
-            margin: 20px 0;
-            padding: 20px;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            border-radius: 15px;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-align: center;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            z-index: 100;
+            white-space: nowrap;
         }
 
         .table-container {
@@ -486,6 +492,8 @@
             }
 
             .multiplication-display {
+                position: static !important;
+                transform: none !important;
                 background: #f0f0f0 !important;
                 color: #333 !important;
                 text-shadow: none !important;
@@ -792,15 +800,16 @@
                 <span class="header-name">Anna</span>
             </div>
             <h1>🎯 Interactive Multiplication Table (12×12)</h1>
+            <div class="multiplication-display" id="multiplication-display">
+                Select two numbers to see the multiplication!
+            </div>
             <div class="stacy-header">
                 <img src="stacy.png" alt="Stacy" class="header-photo">
                 <span class="header-name">Stacy</span>
             </div>
         </div>
 
-        <div class="multiplication-display" id="multiplication-display">
-            Select two numbers to see the multiplication!
-        </div>
+       
 
         <div class="main-layout">
             <div class="controls-row">
