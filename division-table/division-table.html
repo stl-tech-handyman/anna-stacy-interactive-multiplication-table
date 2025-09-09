@@ -980,8 +980,13 @@
                     if (j === 0) {
                         cell.textContent = '∞';
                     } else {
-                        const quotient = Math.floor(dividend / j);
-                        cell.textContent = quotient.toString();
+                        const quotient = dividend / j;
+                        // Only show if it's a perfect division (no remainder)
+                        if (Number.isInteger(quotient)) {
+                            cell.textContent = quotient.toString();
+                        } else {
+                            cell.textContent = ''; // Leave blank for non-perfect divisions
+                        }
                     }
                     cell.id = `cell-${dividend}-${j}`;
                     cell.style.background = getCellColor(dividend, j);
@@ -1287,8 +1292,12 @@
             if (secondNum === 0) {
                 displayAnswer = '∞';
             } else {
-                const quotient = Math.floor(firstNum / secondNum);
-                displayAnswer = quotient.toString();
+                const quotient = firstNum / secondNum;
+                if (Number.isInteger(quotient)) {
+                    displayAnswer = quotient.toString();
+                } else {
+                    displayAnswer = 'Not a perfect division';
+                }
             }
             calculation.textContent = `${firstNum} ÷ ${secondNum} = ${displayAnswer}`;
             
@@ -1363,8 +1372,12 @@
             if (secondNum === 0) {
                 answer = '∞';
             } else {
-                const quotient = Math.floor(firstNum / secondNum);
-                answer = quotient.toString();
+                const quotient = firstNum / secondNum;
+                if (Number.isInteger(quotient)) {
+                    answer = quotient.toString();
+                } else {
+                    answer = 'Not a perfect division';
+                }
             }
 
             // Update display
