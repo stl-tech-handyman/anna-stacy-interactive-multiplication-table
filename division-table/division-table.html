@@ -1620,6 +1620,55 @@
             window.history.replaceState({}, '', url);
         }
 
+        // Initialize dropdown filtering
+        function initDropdownFiltering() {
+            const firstSelect = document.getElementById('first-number');
+            const secondSelect = document.getElementById('second-number');
+            
+            firstSelect.addEventListener('change', function() {
+                const selectedDividend = parseInt(this.value);
+                
+                // Clear the second dropdown
+                secondSelect.value = '';
+                clearHighlights();
+                
+                if (selectedDividend) {
+                    filterDivisorOptions(selectedDividend);
+                } else {
+                    // Reset all options to enabled when no dividend selected
+                    const options = secondSelect.querySelectorAll('option');
+                    options.forEach(option => {
+                        option.disabled = false;
+                        option.style.color = '#000';
+                    });
+                }
+            });
+        }
+
+        // Filter divisor options based on selected dividend
+        function filterDivisorOptions(dividend) {
+            const secondSelect = document.getElementById('second-number');
+            const options = secondSelect.querySelectorAll('option');
+            
+            options.forEach(option => {
+                if (option.value === '') {
+                    option.disabled = false; // Keep "Choose..." option enabled
+                    return;
+                }
+                
+                const divisor = parseInt(option.value);
+                const quotient = dividend / divisor;
+                
+                if (Number.isInteger(quotient)) {
+                    option.disabled = false;
+                    option.style.color = '#000';
+                } else {
+                    option.disabled = true;
+                    option.style.color = '#ccc';
+                }
+            });
+        }
+
         // Initialize everything when page loads
         window.addEventListener('load', function() {
             generateDropdownOptions();
@@ -1628,6 +1677,7 @@
             initHistory();
             initTeacherControls();
             loadURLParameters();
+            initDropdownFiltering();
             
             // Set default theme
             switchTheme('butterfly');
