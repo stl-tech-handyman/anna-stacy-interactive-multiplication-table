@@ -332,7 +332,7 @@
 
 
         .history-section {
-            position: fixed;
+            position: absolute;
             top: 20px;
             right: 20px;
             width: 300px;
@@ -344,11 +344,6 @@
             z-index: 1000;
             max-height: 400px;
             overflow-y: auto;
-            display: none;
-        }
-
-        .history-section.show {
-            display: block;
         }
 
         .history-header {
@@ -508,10 +503,6 @@
             color: white;
         }
 
-        .history-btn {
-            background: linear-gradient(45deg, #9c27b0, #7b1fa2);
-            color: white;
-        }
 
         .print-bw-btn:hover {
             transform: translateY(-2px);
@@ -780,7 +771,7 @@
             }
 
             .history-section {
-                position: fixed;
+                position: absolute;
                 top: 10px;
                 right: 10px;
                 left: 10px;
@@ -880,7 +871,6 @@
             <button id="print-btn" class="teacher-btn print-btn">🖨️ Print Table</button>
             <button id="export-png-btn" class="teacher-btn export-btn">📸 Export as PNG</button>
             <button id="print-bw-btn" class="teacher-btn print-bw-btn">⚫ Print B&W</button>
-            <button id="toggle-history-btn" class="teacher-btn history-btn">📊 History</button>
         </div>
         
         <div class="two-column-layout">
@@ -1515,10 +1505,6 @@
                 }, 100);
             });
 
-            document.getElementById('toggle-history-btn').addEventListener('click', function() {
-                const historySection = document.getElementById('history-section');
-                historySection.classList.toggle('show');
-            });
         }
 
         // Enhanced URL parameter loading
