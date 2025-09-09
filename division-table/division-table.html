@@ -994,7 +994,11 @@
                 for (let j = 0; j <= TABLE_SIZE; j++) {
                     const cell = document.createElement('td');
                     cell.className = 'table-cell';
-                    cell.textContent = j === 0 ? '∞' : '0';
+                    if (j === 0) {
+                        cell.textContent = '∞';
+                    } else {
+                        cell.textContent = '0';
+                    }
                     cell.id = `cell-0-${j}`;
                     cell.style.background = getCellColor(0, j);
                     zeroRow.appendChild(cell);
@@ -1021,8 +1025,13 @@
                     if (j === 0) {
                         cell.textContent = '∞';
                     } else {
-                        const result = i / j;
-                        cell.textContent = Number.isInteger(result) ? result.toString() : result.toFixed(2);
+                        const quotient = Math.floor(i / j);
+                        const remainder = i % j;
+                        if (remainder === 0) {
+                            cell.textContent = quotient.toString();
+                        } else {
+                            cell.textContent = `${quotient} R${remainder}`;
+                        }
                     }
                     cell.id = `cell-${i}-${j}`;
                     cell.style.background = getCellColor(i, j);
@@ -1326,7 +1335,19 @@
             historyItem.className = 'history-item';
             
             const calculation = document.createElement('span');
-            calculation.textContent = `${firstNum} ÷ ${secondNum} = ${answer}`;
+            let displayAnswer;
+            if (secondNum === 0) {
+                displayAnswer = '∞';
+            } else {
+                const quotient = Math.floor(firstNum / secondNum);
+                const remainder = firstNum % secondNum;
+                if (remainder === 0) {
+                    displayAnswer = quotient.toString();
+                } else {
+                    displayAnswer = `${quotient} R${remainder}`;
+                }
+            }
+            calculation.textContent = `${firstNum} ÷ ${secondNum} = ${displayAnswer}`;
             
             const timestamp = document.createElement('span');
             timestamp.textContent = new Date().toLocaleTimeString();
@@ -1397,7 +1418,18 @@
 
             if (firstNum === null || firstNum === undefined || secondNum === null || secondNum === undefined) return;
 
-            const answer = secondNum === 0 ? '∞' : (firstNum / secondNum);
+            let answer;
+            if (secondNum === 0) {
+                answer = '∞';
+            } else {
+                const quotient = Math.floor(firstNum / secondNum);
+                const remainder = firstNum % secondNum;
+                if (remainder === 0) {
+                    answer = quotient.toString();
+                } else {
+                    answer = `${quotient} R${remainder}`;
+                }
+            }
 
             // Update display
             const display = document.getElementById('multiplication-display');
